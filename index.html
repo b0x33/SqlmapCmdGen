@@ -25,6 +25,12 @@
                 <label for="txtUrl">Url</label>
                 <input type="text" class="form-control" id="txtUrl" placeholder="Enter URL">
             </div>
+			
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="chForceSSL" checked>
+                <label class="form-check-label" for="chForceSSL">Force SSL</label>
+            </div>
+			
             <div class="alert alert-primary" role="alert">
 				<a href="https://github.com/sqlmapproject/sqlmap/wiki/Usage#request" class="alert-link">Request:</a>
             </div>
@@ -177,7 +183,13 @@
 		function generateCommand() {
 			var command = "";
 			if ($("#txtUrl").val().length > 0) {
+				
 				command = "--url \"" + $("#txtUrl").val() + "\" ";
+				
+				// checked force-ssl [ https:// ]
+				if ($("#chForceSSL").is(':checked')) {
+					command += "--force-ssl " + $("#chForceSSL :selected").text() + " ";
+				}
 				
 				if ($("#slcMethod :selected").text() != "GET") {
 				command += "--method " + $("#slcMethod :selected").text() + " ";
